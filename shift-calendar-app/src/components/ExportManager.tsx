@@ -1,7 +1,6 @@
-import { useState, useRef } from 'react';
-import { Download, Image, Check, Share2 } from 'lucide-react';
+import { useState } from 'react';
+import { Image, Check, Share2 } from 'lucide-react';
 import { toPng } from 'html-to-image';
-import { useStore } from '../stores/useStore';
 import { CalendarExport } from './CalendarExport';
 import { MONTH_NAMES } from '../utils/dateUtils';
 import { cn } from '../utils/cn';
@@ -12,8 +11,6 @@ export function ExportManager() {
   const [exportType, setExportType] = useState<'monthly' | 'annual'>('monthly');
   const [isExporting, setIsExporting] = useState(false);
   const [exportProgress, setExportProgress] = useState(0);
-
-  const exportRef = useRef<HTMLDivElement>(null);
 
   const toggleMonth = (month: number) => {
     setSelectedMonths((prev) =>

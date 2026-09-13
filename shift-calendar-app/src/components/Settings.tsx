@@ -1,10 +1,8 @@
-import { useState } from 'react';
 import { Trash2, AlertTriangle, Info, Calendar, Clock, Sun } from 'lucide-react';
 import { useStore } from '../stores/useStore';
 
 export function Settings() {
   const { customHolidays, removeCustomHoliday, freeDayTypes } = useStore();
-  const [showResetConfirm, setShowResetConfirm] = useState(false);
 
   const handleResetAll = () => {
     if (confirm('¿Estás seguro? Se borrarán TODOS los datos. Esta acción no se puede deshacer.')) {

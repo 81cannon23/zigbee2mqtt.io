@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { X, Trash2, Calendar as CalendarIcon } from 'lucide-react';
+import { useState } from 'react';
+import { X, Trash2 } from 'lucide-react';
 import { useStore } from '../stores/useStore';
 import { parseDate, formatDisplayDate, isSunday, isSaturday } from '../utils/dateUtils';
 import { getContrastColor } from '../utils/colors';
@@ -56,7 +56,6 @@ export function DayEditor({ date, onClose }: DayEditorProps) {
   );
 
   const parsedDate = parseDate(date);
-  const isHoliday = isSunday(parsedDate) || isCustomHoliday;
 
   const selectedFreeDay = freeDayTypes.find((t) => t.id === selectedFreeDayId);
 

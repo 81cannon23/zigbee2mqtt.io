@@ -2,7 +2,6 @@ import { useState, useMemo } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useStore } from '../stores/useStore';
 import { getContrastColor } from '../utils/colors';
-import { cn } from '../utils/cn';
 
 export function Statistics() {
   const [year, setYear] = useState(new Date().getFullYear());

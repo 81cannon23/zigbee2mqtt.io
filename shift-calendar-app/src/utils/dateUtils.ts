@@ -9,9 +9,7 @@ import {
   isSameDay,
   getDay,
   parse,
-  isWithinInterval,
-  differenceInMinutes,
-  addMinutes
+  differenceInMinutes
 } from 'date-fns';
 import { es } from 'date-fns/locale';
 import type { Shift } from '../types';

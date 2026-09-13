@@ -17,7 +17,7 @@ export function Calendar() {
   const [editingDate, setEditingDate] = useState<string | null>(null);
   const [showShiftSelector, setShowShiftSelector] = useState(false);
 
-  const longPressTimer = useRef<NodeJS.Timeout | null>(null);
+  const longPressTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const touchStartPos = useRef<{ x: number; y: number } | null>(null);
 
   const { setMultipleDaysShift } = useStore();

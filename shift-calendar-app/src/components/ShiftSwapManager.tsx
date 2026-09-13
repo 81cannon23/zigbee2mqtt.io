@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Plus, Trash2, X, Check, ArrowLeftRight } from 'lucide-react';
 import { useStore } from '../stores/useStore';
-import { formatDisplayDate, parseDate, formatDate } from '../utils/dateUtils';
+import { formatDisplayDate, parseDate } from '../utils/dateUtils';
 import { getContrastColor } from '../utils/colors';
 import type { ShiftSwap } from '../types';
 

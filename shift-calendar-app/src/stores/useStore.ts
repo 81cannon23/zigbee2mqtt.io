@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import type { Shift, FreeDayType, DayData, ShiftSwap, CustomHoliday, Statistics } from '../types';
-import { formatDate, calculateShiftHours, calculateNightHours, calculateHolidayHours, isSunday, isSaturday, parseDate } from '../utils/dateUtils';
+import { formatDate, calculateShiftHours, calculateNightHours, calculateHolidayHours, isSunday, isSaturday } from '../utils/dateUtils';
 
 interface AppState {
   // Turnos
@@ -143,21 +143,26 @@ export const useStore = create<AppState>()(
 
       // Acciones para datos de días
       setDayData: (date, data) =>
-        set((state) => ({
-          dayData: {
-            ...state.dayData,
-            [date]: {
-              date,
-              horasExtra: 0,
-              horasExtraordinarias: 0,
-              compensacionHoraria: 0,
-              horasExclusividad: 0,
-              bolsaHoras: 0,
-              ...state.dayData[date],
-              ...data,
+        set((state) => {
+          const existing = state.dayData[date];
+          return {
+            dayData: {
+              ...state.dayData,
+              [date]: {
+                date,
+                horasExtra: existing?.horasExtra ?? 0,
+                horasExtraordinarias: existing?.horasExtraordinarias ?? 0,
+                compensacionHoraria: existing?.compensacionHoraria ?? 0,
+                horasExclusividad: existing?.horasExclusividad ?? 0,
+                bolsaHoras: existing?.bolsaHoras ?? 0,
+                shiftId: existing?.shiftId,
+                freeDay: existing?.freeDay,
+                notes: existing?.notes,
+                ...data,
+              },
             },
-          },
-        })),
+          };
+        }),
 
       clearDayData: (date) =>
         set((state) => {
@@ -170,14 +175,15 @@ export const useStore = create<AppState>()(
         set((state) => {
           const newDayData = { ...state.dayData };
           dates.forEach((date) => {
+            const existing = newDayData[date];
             newDayData[date] = {
               date,
-              horasExtra: 0,
-              horasExtraordinarias: 0,
-              compensacionHoraria: 0,
-              horasExclusividad: 0,
-              bolsaHoras: 0,
-              ...newDayData[date],
+              horasExtra: existing?.horasExtra ?? 0,
+              horasExtraordinarias: existing?.horasExtraordinarias ?? 0,
+              compensacionHoraria: existing?.compensacionHoraria ?? 0,
+              horasExclusividad: existing?.horasExclusividad ?? 0,
+              bolsaHoras: existing?.bolsaHoras ?? 0,
+              notes: existing?.notes,
               shiftId,
               freeDay: undefined,
             };
@@ -202,14 +208,16 @@ export const useStore = create<AppState>()(
           const newDayData = { ...state.dayData };
 
           // Día que trabaja el usuario para el compañero: agregar turno
+          const existingWorked = newDayData[swap.dateWorkedForCoworker];
           newDayData[swap.dateWorkedForCoworker] = {
             date: swap.dateWorkedForCoworker,
-            horasExtra: 0,
-            horasExtraordinarias: 0,
-            compensacionHoraria: 0,
-            horasExclusividad: 0,
-            bolsaHoras: 0,
-            ...newDayData[swap.dateWorkedForCoworker],
+            horasExtra: existingWorked?.horasExtra ?? 0,
+            horasExtraordinarias: existingWorked?.horasExtraordinarias ?? 0,
+            compensacionHoraria: existingWorked?.compensacionHoraria ?? 0,
+            horasExclusividad: existingWorked?.horasExclusividad ?? 0,
+            bolsaHoras: existingWorked?.bolsaHoras ?? 0,
+            notes: existingWorked?.notes,
+            freeDay: existingWorked?.freeDay,
             shiftId: swap.shiftWorked,
           };
 
